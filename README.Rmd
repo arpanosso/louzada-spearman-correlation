@@ -1,0 +1,65 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# louzada-spearman-correlation
+
+```{r}
+library(tidyverse)
+dados <- readxl::read_excel("data/Correlação Entre CR , Cargo , Salário.xlsx")
+glimpse(dados)
+```
+
+## Teste de Pressuposições (normalidade)
+
+### Histograma CR
+
+```{r}
+dados %>% 
+  ggplot(aes(x=CR))+
+  geom_histogram(bins=10, color="black", fill="gray")
+```
+
+```{r}
+dados %>% pull(CR) %>% shapiro.test()
+```
+
+ - Distribuição normal para os CRs.
+ 
+
+
+### Histograma Salário
+
+```{r}
+dados %>% 
+  ggplot(aes(x=Salário))+
+  geom_histogram(bins=10, color="black", fill="gray")
+```
+
+
+```{r}
+dados %>% pull(Salário) %>% shapiro.test()
+```
+
+ - Distribuição assimétrica não normal para Salário.
+ 
+ Devido à falta de normalidade, foi utilizada a correlação de Spearman.
+
+## Correlação de Spearman
+
+```{r}
+cor(dados %>% select(CR, Salário), method = "spearman")
+```
+
+
+Foi observado que o coeficiente de correlação de postos de Spearman entre Salário e CR foi de $0,14$, ou seja, foi maior que $0$ e menor que $1$, indicando uma correlação positiva moderada entre as duas variáveis. Isso significa que, à medida que uma variável aumenta, a outra também aumenta, mas não de forma proporcional. 
+
