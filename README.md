@@ -27,7 +27,7 @@ glimpse(dados)
 
 ## Teste de Pressuposições (normalidade)
 
-### Histograma CR
+### Histograma CR d
 
 ``` r
 dados %>% 
